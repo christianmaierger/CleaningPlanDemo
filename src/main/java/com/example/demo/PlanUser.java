@@ -21,15 +21,22 @@ public class PlanUser {
     }
 
     public PlanUser() {
-
-        name = null;
-        email = null;
+        this.name = "test";
+        this.email = "test";
     }
-
 
     public long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
 
     @Override
     public String toString() {

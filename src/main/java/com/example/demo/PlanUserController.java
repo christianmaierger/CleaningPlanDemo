@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-// Todo actual CORS @CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PlanUserController {
 
     // standard constructors
@@ -20,13 +20,24 @@ public class PlanUserController {
 
     @GetMapping("/users")
     public List<PlanUser> getUsers() {
+        for (PlanUser user2 : planUserRepository.findAll()) {
+            System.out.println(user2);
+        }
+
         return (List<PlanUser>) planUserRepository.findAll();
     }
 
-    @PostMapping("/users")
+  /*  @PostMapping("/users")
     ResponseEntity<String> addUser(@Valid @RequestBody PlanUser planUser) {
         // TODO Exception handling
         planUserRepository.save(planUser);
-        return ResponseEntity.ok("User is valid");
+        return ResponseEntity.ok("ok");
+    }*/
+
+    @PostMapping("/users")
+    void addUser(@RequestBody PlanUser user) {
+        planUserRepository.save(user);
     }
+
+
 }
