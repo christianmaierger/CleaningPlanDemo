@@ -17,4 +17,17 @@ export class User {
   get email(): string {
     return this._email;
   }
+
+
+  set id(value: string) {
+    this._id = value;
+  }
+
+  set name(value: string) {
+    this._name = value;
+  }
+
+  set email(value: string) {
+    this._email = value;
+  }
 }

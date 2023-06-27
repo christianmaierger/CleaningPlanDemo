@@ -21,4 +21,18 @@ export class UserService {
   public save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
   }
+
+  public saveChange(user: User) {
+    return this.http.put<User>(this.usersUrl, user);
+  }
+
+  public deleteUser(userId: number) {
+    const url = `${this.usersUrl}/${userId}`;
+    console.log(this.usersUrl)
+    console.log("This url is called for deletion: " + url)
+    return this.http.delete(url);
+  }
+
+
+
 }
