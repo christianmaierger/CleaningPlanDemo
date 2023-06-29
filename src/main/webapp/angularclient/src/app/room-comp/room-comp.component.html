@@ -1,0 +1,27 @@
+<div class="card my-5">
+  <div class="card-body">
+    <h4>Room Details</h4>
+    <div class="form-group">
+      <label>ID</label>
+      <p>{{ room.id }}</p>
+    </div>
+    <div class="form-group">
+      <label>Name</label>
+      <p>{{ room.name }}</p>
+    </div>
+    <div class="form-group" *ngIf="room.user && !room.userEdible; else addUser">
+      <label>User</label>
+      <p>{{ room.user }}</p>
+    </div>
+    <!-- todo perhaps a drop down with existing users would be better, have no other idea or better to make sure user here is valid-->
+    <div class="form-group" *ngIf="room.user && room.userEdible ">
+      <label>Change User</label>
+      <input type="text" [(ngModel)]="room.user" class="form-control">
+    </div>
+    <ng-template class="form-group" #addUser>
+      <label>Add User</label>
+      <input type="text" [(ngModel)]="room.user" class="form-control">
+    </ng-template>
+  </div>
+</div>
+

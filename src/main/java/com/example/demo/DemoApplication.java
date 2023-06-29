@@ -21,20 +21,28 @@ public class DemoApplication {
 
         SpringApplication.run(DemoApplication.class, args);
     }
-// rovides information such as the username, roles, and other details associated with the authenticated user
+// provides information such as the username, roles, and other details associated with the authenticated user
    // @RequestMapping("/user")
   //  public Principal user(Principal user) {
    //     return user;
  //   }
 
+
+    // this is just for testing purposes to fill the db with some users and rooms
     @Bean
-    CommandLineRunner init(PlanUserRepository planUserRepository) {
+    CommandLineRunner init(PlanUserRepository planUserRepository, RoomRepository roomRepository) {
         return args -> {
             Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
                 PlanUser planUser = new PlanUser(name, name.toLowerCase() + "@domain.com");
                 planUserRepository.save(planUser);
             });
             planUserRepository.findAll().forEach(System.out::println);
+
+            Stream.of("Küche", "Bad", "Wohnzimmer").forEach(name -> {
+                 Room room = new Room(name);
+                roomRepository.save(room);
+            });
+            roomRepository.findAll().forEach(System.out::println);
         };
     }
 
@@ -43,8 +51,6 @@ public class DemoApplication {
     /*@Configuration
     @EnableWebSecurity
     public class SecurityConfiguration {
-
-
 
         *//*public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
             return httpSecurity

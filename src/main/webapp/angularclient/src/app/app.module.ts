@@ -9,6 +9,11 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UserService } from './service/user-service.service';
 import {LoginComponent} from "./login/login.component";
 import {AuthGuard, LoginService} from "./service/login-service.service";
+import { RoomListComponent } from './room-list/room-list.component';
+import {RoomService} from "./service/room-service.service";
+import { RoomCompComponent } from './room-comp/room-comp.component';
+import { WeekdayCompComponent } from './weekday-comp/weekday-comp.component';
+
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -26,7 +31,10 @@ export class XhrInterceptor implements HttpInterceptor {
     AppComponent,
     UserListComponent,
     UserFormComponent,
-    LoginComponent
+    LoginComponent,
+    RoomListComponent,
+    RoomCompComponent,
+    WeekdayCompComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +42,7 @@ export class XhrInterceptor implements HttpInterceptor {
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService, AuthGuard, LoginService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
+  providers: [UserService, AuthGuard, LoginService, RoomService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

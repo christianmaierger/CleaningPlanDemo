@@ -7,14 +7,41 @@
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
+          <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users; let i = index" >
           <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+            <ng-container *ngIf="!rowEditable[i]; else editFields">
+              {{user.name }}
+             <td>
+              <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+             </td>
+            </ng-container>
+            <ng-template #editFields>
+              <td>
+                <input type="text" [(ngModel)]="user.name" class="form-control" name="name" required #name="ngModel" (ngModelChange)="onNameInputChange(name)">
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                  <div *ngIf="name.errors?.['required']">Name is required</div>
+                </div>
+              </td>
+              <td>
+                <input type="text" [(ngModel)]="user.email" class="form-control" name="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" #email="ngModel" (ngModelChange)="onEmailInputChange(email)">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                  <div *ngIf="email.errors && email.errors?.['required']">Email is required</div>
+                  <div *ngIf="email.errors && email.errors?.['pattern']">Invalid email format</div>
+                </div>
+              </td>
+            </ng-template>
+
           <td>
+            <ng-container *ngIf="!rowEditable[i]; else submitButton">
+              <button class="btn btn-primary mr-2" (click)="toggleEdit(i)">Edit</button>
+            </ng-container>
+            <ng-template #submitButton>
+              <button type="submit" [disabled]="emailInvalid" class="btn btn-success mr-2" (click)="saveChanges(user); toggleEdit(i)">Submit Changes</button>
+            </ng-template>
             <button class="btn btn-danger" (click)="deleteUser(user.id)">
             <i class="bi bi-trash"></i> Delete
             </button>

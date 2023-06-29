@@ -19,17 +19,17 @@ export class UserService {
   }
 
   public save(user: User) {
+    console.log("before sending user looks like", JSON.stringify(user));
     return this.http.post<User>(this.usersUrl, user);
   }
 
-  public saveChange(user: User) {
-    return this.http.put<User>(this.usersUrl, user);
+  public saveChange(user: User,) {
+    const url = `${this.usersUrl}/${user.id}`;
+    return this.http.put<User>(url, user);
   }
 
   public deleteUser(userId: number) {
     const url = `${this.usersUrl}/${userId}`;
-    console.log(this.usersUrl)
-    console.log("This url is called for deletion: " + url)
     return this.http.delete(url);
   }
 

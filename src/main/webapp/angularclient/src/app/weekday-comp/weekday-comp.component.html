@@ -1,0 +1,19 @@
+<div class="card my-5">
+  <div class="card-body">
+    <h4>Weekday Details</h4>
+    <div class="form-group">
+      <label>Day</label>
+      <p>{{ weekday.day }}</p>
+    </div>
+    <div *ngIf="weekday.rooms && weekday.rooms.length > 0; else noRooms">
+      <h5>Rooms to be Cleaned:</h5>
+      <div class="room-list">
+        <app-room-comp *ngFor="let room of weekday.rooms" [room]="room"></app-room-comp>
+      </div>
+    </div>
+    <ng-template #noRooms>
+      <p>No rooms to be cleaned on this day.</p>
+    </ng-template>
+  </div>
+</div>
+

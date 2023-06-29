@@ -1,0 +1,57 @@
+<div class="card my-5">
+  <div class="card-body">
+    <ng-container *ngIf="rooms && rooms.length > 0; else noRooms">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let room of rooms; let i = index">
+          <td>{{ room.id }}</td>
+          <td>
+            <ng-container *ngIf="!rowEditable[i]; else editField">
+              {{ room.name }}
+            </ng-container>
+            <ng-template #editField>
+              <input type="text" [(ngModel)]="room.name" class="form-control">
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="!rowEditable[i]; else submitButton">
+              <button class="btn btn-primary mr-2" (click)="toggleEdit(i)">Edit</button>
+            </ng-container>
+            <ng-template #submitButton>
+              <button class="btn btn-success mr-2" (click)="saveChanges(room); toggleEdit(i)">Submit Changes</button>
+            </ng-template>
+            <button class="btn btn-danger" (click)="deleteRoom(room.id)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" colspan="3">
+            <form (ngSubmit)="onSubmit()" #roomForm="ngForm">
+              <div class="form-group">
+                <label for="name">Add a new Room</label>
+                <input type="text" [(ngModel)]="newRoom.name" class="form-control" id="name" name="name"
+                       placeholder="Enter the name of the room to add" required #name="ngModel">
+              </div>
+              <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                Name is required
+              </div>
+              <button type="submit" [disabled]="!roomForm.form.valid" class="btn btn-info">Submit</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-template #noRooms>
+      <p>No Rooms registered so far.</p>
+    </ng-template>
+  </div>
+</div>

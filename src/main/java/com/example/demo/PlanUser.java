@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,8 +17,9 @@ public class PlanUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private final String name;
-    private final String email;
+    //@JsonProperty("_name") then mapping does not work at all even for get requests..
+    private String name;
+    private String email;
 
     public PlanUser(String name, String email) {
         this.name = name;
@@ -25,9 +27,11 @@ public class PlanUser {
     }
 
     public PlanUser() {
-        this.name = "test";
-        this.email = "test";
+        this.email ="";
+        this.name ="";
     }
+
+
 
     public long getId() {
         return id;
@@ -41,6 +45,17 @@ public class PlanUser {
         return email;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -50,5 +65,7 @@ public class PlanUser {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
 }
 
